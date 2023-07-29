@@ -13,6 +13,7 @@ class UserViewModel {
   Future getUserList(Function() callback) async {
     var result = await _useCase.getUserList();
     result.when(success: (userList) {
+      this.userList.clear();
       this.userList = userList;
       callback();
     }, error: (message) {

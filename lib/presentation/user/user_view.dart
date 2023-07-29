@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/main.dart';
+import 'package:hello_world/widgets/email_button.dart';
+import 'package:hello_world/widgets/user_detail.dart';
 
 class UserView extends StatefulWidget {
   const UserView({super.key});
@@ -21,29 +23,48 @@ class _UserViewState extends State<UserView> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-            for (int i = 0; i < vm.userList.length; i++)
-              GestureDetector(
-                onTap: () async {
-                  await vm.getUserById(vm.userList[i].id);
-
-                  setState(() {});
-                },
-                child: Container(
-                    color: Colors.amber,
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: Text(vm.userList[i].email)),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < vm.userList.length; i++)
+                      EmailButton(
+                        title: vm.userList[i].email,
+                        idx: i,
+                        onPressed: () async {
+                          await vm.getUserById(vm.userList[i].id);
+                          setState(() {});
+                        },
+                      )
+                  ],
+                ),
               ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < vm.userList.length; i++)
+                      EmailButton(
+                        title: vm.userList[i].email,
+                        idx: i,
+                        onPressed: () async {
+                          await vm.getUserById(vm.userList[i].id);
+                          setState(() {});
+                        },
+                      )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(vm.user?.email ?? ''),
-            Text(vm.user?.name ?? ''),
-          ],
+          children: [UserDetail(user: vm.user)],
         ),
       ],
     ));
